@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: responsibles
+  datasource:
+    url: jdbc:postgresql://localhost:3333/registerUsers
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+
+
+
+
