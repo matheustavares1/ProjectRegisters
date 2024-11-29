@@ -34,4 +34,15 @@ public class AdviceCustonsExceptions {
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(err);
     }
+
+    @ExceptionHandler(CpfNotFound.class)
+    public ResponseEntity<StandardError> findByCpf(NotFoundException exception, HttpServletRequest request) {
+        err.setStatus(HttpStatus.NOT_FOUND.value());
+        err.setMessage("CPF NOT EXIST");
+        err.setPath(request.getRequestURI());
+        err.setDateTime(Instant.now());
+        err.setError("NOT_FOUND");
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(err);
+    }
 }

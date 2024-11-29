@@ -2,6 +2,7 @@ package com.example.RegisterResponsible.services;
 
 import com.example.RegisterResponsible.entities.Responsibles;
 import com.example.RegisterResponsible.exceptions.ConflictCPFExist;
+import com.example.RegisterResponsible.exceptions.CpfNotFound;
 import com.example.RegisterResponsible.exceptions.NotFoundException;
 import com.example.RegisterResponsible.repositories.ResponsiblesRepository;
 import org.springframework.http.HttpStatus;
@@ -40,6 +41,11 @@ public class ResponsiblesServices {
 
     public void deleteResponsible(UUID id) {
         repository.deleteById(id);
+    }
+
+    public ResponseEntity<Responsibles> findByCpf(String cpf) {
+       Responsibles responsibles = repository.findByCpf(cpf).orElseThrow(CpfNotFound::new);
+        return ResponseEntity.ok(responsibles);
     }
 }
 

@@ -41,5 +41,9 @@ public class ResponsiblesController {
     public void deleteResponsible(@PathVariable("id") UUID id) {
         services.deleteResponsible(id);
     }
+    @GetMapping("/cpf/{cpf}")
+    public ResponseEntity<Responsibles> findByCpf(@PathVariable String cpf) {
+        return services.findByCpf(cpf);
+    }
 
 }
