@@ -1,7 +1,6 @@
 package com.example.RegisterResponsible.controllers;
 
 import com.example.RegisterResponsible.entities.Responsibles;
-import com.example.RegisterResponsible.repositories.ResponsiblesRepository;
 import com.example.RegisterResponsible.services.ResponsiblesServices;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
