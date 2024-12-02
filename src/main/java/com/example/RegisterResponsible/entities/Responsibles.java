@@ -21,12 +21,12 @@ public class Responsibles {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
-    @Column(name = "name")
+   // @Column(name = "name")
     private String name;
-    @Column(name = "responsible_email")
-    private String  responsible_email;
-    @Column(name = "respondible_phone")
-    private String responsible_phone;
-    @Column(name = "cpf")
+    //@Column(name = "email")
+    private String  email;
+   //@Column(name = "respondible_phone")
+    private String phone;
+   // @Column(name = "cpf")
     private String cpf;
 }

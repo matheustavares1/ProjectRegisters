@@ -9,5 +9,8 @@ import java.util.UUID;
 public interface ResponsiblesRepository extends JpaRepository<Responsibles, UUID> {
 
     Optional<Responsibles> findByCpf(String cpf);
+    Optional<Responsibles>  findByEmail (String email);
+
+
 
 }
