@@ -1,5 +1,6 @@
 package com.example.RegisterResponsible.services;
 
+
 import com.example.RegisterResponsible.entities.Responsibles;
 import com.example.RegisterResponsible.exceptions.ConflictExceptionCpf;
 import com.example.RegisterResponsible.exceptions.ConflictExceptionEmail;
@@ -19,38 +20,59 @@ public class ResponsiblesServices {
 
     private final ResponsiblesRepository repository;
 
+
     public ResponsiblesServices(ResponsiblesRepository repository) {
         this.repository = repository;
+
     }
+
     //MÉTODO PARA ADICIONAR UM RESPONSÁVEL COM VERIFICAÇÃO DE CPF(O CPF DEVE SER UNICO NO BANCO)
     public ResponseEntity<?> register(Responsibles responsibles) {
-        if(repository.findByCpf(responsibles.getCpf()).isPresent()) {
+        if (repository.findByCpf(responsibles.getCpf()).isPresent()) {
             throw new ConflictExceptionCpf();
         }
-        if(repository.findByEmail(responsibles.getEmail()).isPresent()) {
+        if (repository.findByEmail(responsibles.getEmail()).isPresent()) {
             throw new ConflictExceptionEmail();
         }
         return ResponseEntity.status(HttpStatus.CREATED).body(repository.save(responsibles));
     }
+
     //BUSCAR(LISTAR) TODOS OS RESPONSÁVEIS SALVOS NO BANCO
     public List<Responsibles> buscarRegistros() {
         return repository.findAll();
     }
+
     //METODO PARA BUSCAR O RESPONSÁVEL PELO ID
     public ResponseEntity<Responsibles> buscarResponsiblePorId(UUID id) {
-                                                                            //sapoora é lambda
+                                                                        //sapoora é lambda
         Responsibles responsible = repository.findById(id).orElseThrow(IdNotFoundException::new);
         return ResponseEntity.ok(responsible);
     }
+
     //MÉTODO PARA DELETAR UM RESPONSÁVEL DO BANCO ATRAVPES DO ID
     public void deleteResponsible(UUID id) {
         repository.deleteById(id);
     }
+
     //METODO PARA BUSCAR O RESPONSÁVEL PELO CPF
     public ResponseEntity<Responsibles> findByCpf(String cpf) {
-       Responsibles responsibles = repository.findByCpf(cpf).orElseThrow(CpfNotFound::new);
+        Responsibles responsibles = repository.findByCpf(cpf).orElseThrow(CpfNotFound::new);
         return ResponseEntity.ok(responsibles);
     }
+    //METODO PARA ATUALIZAR CADASTRO
+    public Responsibles upadateResponsible(UUID id, Responsibles responsibles) {
+        return repository.findById(id)
+                .map(existingResponsibles -> {
+                    existingResponsibles.setCpf(responsibles.getCpf());
+                    existingResponsibles.setEmail(responsibles.getEmail());
+                    existingResponsibles.setName(responsibles.getName());
+                    existingResponsibles.setChildren(responsibles.getChildren());
+                   return repository.save(existingResponsibles);
+                })
+                .orElseThrow(IdNotFoundException::new);
+    }
+
+
 }
 
 
