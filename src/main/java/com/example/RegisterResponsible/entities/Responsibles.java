@@ -1,6 +1,7 @@
 package com.example.RegisterResponsible.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,7 +23,8 @@ public class Responsibles {
     public Responsibles() {
     }
 
-    @OneToMany(mappedBy = "responsible", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "responsible")
+    @JsonManagedReference
     private List<Children> children = new ArrayList<>();
 
     @Id

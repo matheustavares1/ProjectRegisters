@@ -48,6 +48,11 @@ public class ChildrenController {
         services.deleteChildrenByCpf(id);
     }
 
+    @PutMapping("update/{id}")
+    public ResponseEntity<Children> upadeteChildren(@PathVariable UUID id,@RequestBody Children children){
+        Children newChidren = services.upadteChildren(id, children);
+        return ResponseEntity.ok(newChidren);
+    }
 
 
 }

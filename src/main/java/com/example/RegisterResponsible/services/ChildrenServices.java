@@ -25,25 +25,29 @@ public class ChildrenServices {
         this.responsibleRepository = responsibleRepository;
     }
 
-    //METODO PARA REGISTRAR CRIANÇA
 
     //LISTAR TODOS OS REGISTROS
     public List<Children> getAllChildren() {
         return repository.findAll();
     }
+
     //BUSCAR POR CPF
     public ResponseEntity<Children> getChildrenByCpf(String cpf) {
-       Children children = repository.findByCpf(cpf).orElseThrow(CpfNotFound::new);
-       return ResponseEntity.status(HttpStatus.OK).body(children);
+        Children children = repository.findByCpf(cpf).orElseThrow(CpfNotFound::new);
+        return ResponseEntity.status(HttpStatus.OK).body(children);
     }
+
+    //BUSSCAR PELO ID
     public ResponseEntity<Children> getChildrenById(UUID id) {
         Children children = repository.findById(id).orElseThrow(IdNotFoundException::new);
         return ResponseEntity.status(HttpStatus.OK).body(children);
     }
+
     //DELETAR CRIANÇA DO BANCO
     public void deleteChildrenByCpf(UUID id) {
         repository.deleteById(id);
     }
+
     //METODO PARA ATUALIZAR CADASTRO
     public Children upadteChildren(UUID id, Children upadateChildren) {
         return repository.findById(id)
@@ -52,19 +56,19 @@ public class ChildrenServices {
                     existingChildren.setName(upadateChildren.getName());
                     return repository.save(existingChildren);
                 })
-                    .orElseThrow(IdNotFoundException::new);
-                }
+                .orElseThrow(IdNotFoundException::new);
+    }
 
-     //ADICIONAR NOVA CRIANÇA VINCULADA A UM RESPONSAVEL
+    //ADICIONAR NOVA CRIANÇA VINCULADA A UM RESPONSAVEL
     public Children addChildToResponsible(UUID responsibleId, Children children) {
         //VERIFICA SE JA EXISTE CPF NO BANCO
-        if(repository.findByCpf(children.getCpf()).isPresent()) {
+        if (repository.findByCpf(children.getCpf()).isPresent()) {
             throw new ConflictExceptionCpf();
         }
 
         // Busca o Responsible pelo ID
         Responsibles responsible = responsibleRepository.findById(responsibleId)
-                .orElseThrow(() -> new IdNotFoundException("Responsible not found"));
+                .orElseThrow(IdNotFoundException::new);
 
         // Define o Responsible no objeto Children
         children.setResponsible(responsible);
@@ -72,6 +76,6 @@ public class ChildrenServices {
         // Salva o Children no banco
         return repository.save(children);
     }
-    }
+}
 
 

@@ -20,7 +20,7 @@ public class ResponsiblesServices {
 
     private final ResponsiblesRepository repository;
 
-
+    //Injeção de Dependencia
     public ResponsiblesServices(ResponsiblesRepository repository) {
         this.repository = repository;
 
@@ -44,7 +44,7 @@ public class ResponsiblesServices {
 
     //METODO PARA BUSCAR O RESPONSÁVEL PELO ID
     public ResponseEntity<Responsibles> buscarResponsiblePorId(UUID id) {
-                                                                        //sapoora é lambda
+
         Responsibles responsible = repository.findById(id).orElseThrow(IdNotFoundException::new);
         return ResponseEntity.ok(responsible);
     }
@@ -61,6 +61,7 @@ public class ResponsiblesServices {
     }
     //METODO PARA ATUALIZAR CADASTRO
     public Responsibles upadateResponsible(UUID id, Responsibles responsibles) {
+
         return repository.findById(id)
                 .map(existingResponsibles -> {
                     existingResponsibles.setCpf(responsibles.getCpf());

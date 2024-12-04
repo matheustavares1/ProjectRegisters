@@ -1,6 +1,6 @@
 package com.example.RegisterResponsible.controllers;
 
-import com.example.RegisterResponsible.entities.Children;
+
 import com.example.RegisterResponsible.entities.Responsibles;
 import com.example.RegisterResponsible.services.ResponsiblesServices;
 import org.springframework.http.HttpStatus;
@@ -27,7 +27,7 @@ public class ResponsiblesController {
         return ResponseEntity.status(HttpStatus.CREATED).body(services.register(responsibles));
 
     }
-    @GetMapping
+    @GetMapping("/all")
     public List<Responsibles> getAllResponsibles() {
         return services.buscarRegistros();
     }
@@ -37,16 +37,16 @@ public class ResponsiblesController {
         return services.buscarResponsiblePorId(id);
     }
 
-    @DeleteMapping("/deleteResponsibles/{id}")
-    public void deleteResponsible(@PathVariable("id") UUID id) {
-        services.deleteResponsible(id);
+    @DeleteMapping("/deleteResponsibles/{responsibleId}")
+    public void deleteResponsible(@PathVariable("responsibleId") UUID responsibleId) {
+        services.deleteResponsible(responsibleId);
     }
     @GetMapping("/cpf/{cpf}")
     public ResponseEntity<Responsibles> findByCpf(@PathVariable String cpf) {
         return services.findByCpf(cpf);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/update/{id}")
     public ResponseEntity<Responsibles> updateResponsible(@PathVariable UUID id, @RequestBody Responsibles responsibles) {
         Responsibles newResponsibles = services.upadateResponsible(id, responsibles);
         return ResponseEntity.ok(newResponsibles);

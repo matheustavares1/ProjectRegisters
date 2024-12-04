@@ -1,6 +1,7 @@
 package com.example.RegisterResponsible.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -16,6 +17,7 @@ public class Children {
 
     @ManyToOne
     @JoinColumn(name = "id_responsibles")
+    @JsonBackReference
     private Responsibles responsible;
 
     @Id
