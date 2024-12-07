@@ -55,4 +55,24 @@ public class AdviceCustonsExceptions {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(err);
 
     }
+    @ExceptionHandler(ConflictExceptionEnrollment.class)
+    public ResponseEntity<StandardError> enrollmentExist(ConflictExceptionEnrollment exception, HttpServletRequest request) {
+        err.setStatus(HttpStatus.CONFLICT.value());
+        err.setMessage("SCHOOL ENROLLMENT EXIST");
+        err.setPath(request.getRequestURI());
+        err.setDateTime(Instant.now());
+        err.setError("CONFLICT_SCHOLENROLLMENT");
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(err);
+
+    }
+    @ExceptionHandler(PSQLException.class)
+    public ResponseEntity<StandardError> enrollmentExist(PSQLException exception, HttpServletRequest request) {
+        err.setStatus(HttpStatus.CONFLICT.value());
+        err.setMessage("SCHOOL ENROLLMENT EXIST");
+        err.setPath(request.getRequestURI());
+        err.setDateTime(Instant.now());
+        err.setError("CONFLICT_SCHOLENROLLMENT");
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(err);
+
+    }
 }

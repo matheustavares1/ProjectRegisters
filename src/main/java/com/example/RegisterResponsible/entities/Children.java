@@ -6,6 +6,8 @@ import jakarta.persistence.*;
 import lombok.*;
 
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 @ToString
 @Getter
@@ -27,7 +29,11 @@ public class Children {
     private String cpf;
     @Column(name = "class")
     @Enumerated(EnumType.STRING)
-    private Class classe;
+    private Class schollClass;
+
+    @Column(name = "school_enrollment")
+    private Integer childrenEnrollment   ;
+
 
 
 }
