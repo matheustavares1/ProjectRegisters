@@ -55,16 +55,7 @@ public class AdviceCustonsExceptions {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(err);
 
     }
-    @ExceptionHandler(ConflictExceptionEnrollment.class)
-    public ResponseEntity<StandardError> enrollmentExist(ConflictExceptionEnrollment exception, HttpServletRequest request) {
-        err.setStatus(HttpStatus.CONFLICT.value());
-        err.setMessage("SCHOOL ENROLLMENT EXIST");
-        err.setPath(request.getRequestURI());
-        err.setDateTime(Instant.now());
-        err.setError("CONFLICT_SCHOLENROLLMENT");
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(err);
 
-    }
     @ExceptionHandler(PSQLException.class)
     public ResponseEntity<StandardError> enrollmentExist(PSQLException exception, HttpServletRequest request) {
         err.setStatus(HttpStatus.CONFLICT.value());
@@ -74,5 +65,14 @@ public class AdviceCustonsExceptions {
         err.setError("CONFLICT_SCHOLENROLLMENT");
         return ResponseEntity.status(HttpStatus.CONFLICT).body(err);
 
+    }
+    @ExceptionHandler(EmailException.class)
+    public ResponseEntity<StandardError> enrollmentExist(EmailException exception, HttpServletRequest request) {
+        err.setStatus(HttpStatus.EXPECTATION_FAILED.value());
+        err.setMessage("EMAIL NOT SENDING");
+        err.setPath(request.getRequestURI());
+        err.setDateTime(Instant.now());
+        err.setError("FAILED_SEND_EMAIL");
+        return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(err);
     }
 }

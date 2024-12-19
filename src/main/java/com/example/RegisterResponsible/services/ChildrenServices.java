@@ -26,6 +26,7 @@ public class ChildrenServices {
 
     //LISTAR TODOS OS REGISTROS
     public List<Children> getAllChildren() {
+
         return repository.findAll();
     }
 
@@ -42,7 +43,8 @@ public class ChildrenServices {
     }
 
     //DELETAR CRIANÇA DO BANCO
-    public void deleteChildrenByCpf(UUID id) {
+    public void deleteChildrenById(UUID id) {
+        repository.findById(id).orElseThrow(IdNotFoundException::new);
         repository.deleteById(id);
     }
 
@@ -68,7 +70,7 @@ public class ChildrenServices {
             //BUSCANDO O MAIOR NÚMERO DA COLUNA DE SCHOLLENROLLMENT
             Integer maxSchoolEnrollment = repository.findMaxSchoolEnrollment()
                     .orElseThrow(PSQLException::new);
-            //INCREMENTANDO O MAIOR VALOR PARA SETAR O PROIMO
+            //INCREMENTANDO O MAIOR VALOR PARA SETAR O PROXIMO
             children.setChildrenEnrollment(maxSchoolEnrollment + 1);
         }
 

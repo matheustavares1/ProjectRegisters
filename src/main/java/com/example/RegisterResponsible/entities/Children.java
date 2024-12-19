@@ -4,11 +4,8 @@ package com.example.RegisterResponsible.entities;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
-
-
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
+
 @ToString
 @Getter
 @Setter
@@ -27,13 +24,11 @@ public class Children {
     private UUID id;
     private String name;
     private String cpf;
+
     @Column(name = "class")
     @Enumerated(EnumType.STRING)
-    private Class schollClass;
+    private Class schoolClass;
 
     @Column(name = "school_enrollment")
     private Integer childrenEnrollment   ;
-
-
-
 }
