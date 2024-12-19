@@ -1,6 +1,7 @@
 package com.example.RegisterResponsible.services;
 
 
+import com.example.RegisterResponsible.email.SendingEmail;
 import com.example.RegisterResponsible.entities.Responsibles;
 import com.example.RegisterResponsible.exceptions.ConflictExceptionCpf;
 import com.example.RegisterResponsible.exceptions.ConflictExceptionEmail;
@@ -19,11 +20,12 @@ import java.util.UUID;
 public class ResponsiblesServices {
 
     private final ResponsiblesRepository repository;
+    private final SendingEmail sendingEmail;
 
     //Injeção de Dependencia
-    public ResponsiblesServices(ResponsiblesRepository repository) {
+    public ResponsiblesServices(ResponsiblesRepository repository, SendingEmail sendingEmail) {
         this.repository = repository;
-
+        this.sendingEmail = sendingEmail;
     }
 
     //MÉTODO PARA ADICIONAR UM RESPONSÁVEL COM VERIFICAÇÃO DE CPF(O CPF DEVE SER UNICO NO BANCO)
@@ -34,6 +36,8 @@ public class ResponsiblesServices {
         if (repository.findByEmail(responsibles.getEmail()).isPresent()) {
             throw new ConflictExceptionEmail();
         }
+        //ENVIDO DO EMAIL DE CONFIRMAÇÃO DE REGISTRO
+        sendingEmail.sendEmail(responsibles.getEmail(), "Registration Confimation!","Responsible person successfully registered");
         return ResponseEntity.status(HttpStatus.CREATED).body(repository.save(responsibles));
     }
 

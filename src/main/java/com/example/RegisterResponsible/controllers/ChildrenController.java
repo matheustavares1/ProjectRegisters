@@ -43,9 +43,9 @@ public class ChildrenController {
         return services.getChildrenById(id);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("delete/{id}")
     public void deleteChildren(@PathVariable UUID id){
-        services.deleteChildrenByCpf(id);
+        services.deleteChildrenById(id);
     }
 
     @PutMapping("update/{id}")

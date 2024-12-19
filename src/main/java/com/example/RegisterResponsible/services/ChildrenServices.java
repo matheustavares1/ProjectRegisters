@@ -2,9 +2,7 @@ package com.example.RegisterResponsible.services;
 
 import com.example.RegisterResponsible.entities.Children;
 import com.example.RegisterResponsible.entities.Responsibles;
-import com.example.RegisterResponsible.exceptions.ConflictExceptionCpf;
-import com.example.RegisterResponsible.exceptions.CpfNotFound;
-import com.example.RegisterResponsible.exceptions.IdNotFoundException;
+import com.example.RegisterResponsible.exceptions.*;
 import com.example.RegisterResponsible.repositories.ChildrenRepository;
 import com.example.RegisterResponsible.repositories.ResponsiblesRepository;
 import org.springframework.http.HttpStatus;
@@ -28,6 +26,7 @@ public class ChildrenServices {
 
     //LISTAR TODOS OS REGISTROS
     public List<Children> getAllChildren() {
+
         return repository.findAll();
     }
 
@@ -44,7 +43,8 @@ public class ChildrenServices {
     }
 
     //DELETAR CRIANÇA DO BANCO
-    public void deleteChildrenByCpf(UUID id) {
+    public void deleteChildrenById(UUID id) {
+        repository.findById(id).orElseThrow(IdNotFoundException::new);
         repository.deleteById(id);
     }
 
@@ -65,6 +65,15 @@ public class ChildrenServices {
         if (repository.findByCpf(children.getCpf()).isPresent()) {
             throw new ConflictExceptionCpf();
         }
+
+        if(children.getChildrenEnrollment() == null) {
+            //BUSCANDO O MAIOR NÚMERO DA COLUNA DE SCHOLLENROLLMENT
+            Integer maxSchoolEnrollment = repository.findMaxSchoolEnrollment()
+                    .orElseThrow(PSQLException::new);
+            //INCREMENTANDO O MAIOR VALOR PARA SETAR O PROXIMO
+            children.setChildrenEnrollment(maxSchoolEnrollment + 1);
+        }
+
 
         // Busca o Responsible pelo ID
         Responsibles responsible = responsibleRepository.findById(responsibleId)
